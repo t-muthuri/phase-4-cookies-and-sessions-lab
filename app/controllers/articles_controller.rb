@@ -18,7 +18,7 @@ class ArticlesController < ApplicationController
     article = Article.find(params[:id])
     render json: article
     else
-      render json: { error: "Maximum number of pages viewed reached"}, status: :unauthorized
+      render json: { error: "Maximum pageview limit reached"}, status: :unauthorized
     end
   end
 
