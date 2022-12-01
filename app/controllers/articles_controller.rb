@@ -6,9 +6,20 @@ class ArticlesController < ApplicationController
     render json: articles, each_serializer: ArticleListSerializer
   end
 
+  # GET request to /articles/:id
   def show
+    # set session[:page_views] to an initial value of 0
+    #  ||= used to assign a value if the current value is nil/false
+    session[:page_views] ||= 0
+    # increment by 1
+    session[:page_views] += 1
+
+    if session[:page_views] <= 3
     article = Article.find(params[:id])
     render json: article
+    else
+      render json: { error: "Maximum number of pages viewed reached"}, status: :unauthorized
+    end
   end
 
   private
